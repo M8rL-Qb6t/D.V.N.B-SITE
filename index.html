@@ -1,0 +1,2893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.V.N.B VPN | Secure VPN Service</title>
+    <meta name="description" content="D.V.N.B - Premium VPN service with military-grade encryption, zero logs, and lightning-fast speeds.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ========== CSS VARIABLES ========== */
+        :root {
+            --primary-blue: #0056cc;
+            --dark-blue: #003d99;
+            --light-blue: #3399ff;
+            --accent-blue: #0088ff;
+            --blue-gradient: linear-gradient(135deg, #0056cc 0%, #0088ff 50%, #00bfff 100%);
+            --white: #ffffff;
+            --off-white: #f8fafc;
+            --light-gray: #e9ecef;
+            --medium-gray: #dee2e6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --card-shadow: 0 10px 25px rgba(0, 86, 204, 0.12);
+            --card-shadow-hover: 0 20px 40px rgba(0, 86, 204, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== BASE STYLES ========== */
+        * { 
+            margin:0; 
+            padding:0; 
+            box-sizing:border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: var(--text-dark);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundFadeIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 15px rgba(0, 86, 204, 0.25); }
+            50% { box-shadow: 0 4px 25px rgba(0, 86, 204, 0.4); }
+            100% { box-shadow: 0 4px 15px rgba(0, 86, 204, 0.25); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(40px, -60px) rotate(120deg); }
+            66% { transform: translate(-30px, 40px) rotate(240deg); }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0; 
+            right: 0;
+            z-index: 1000;
+            padding: 10px 4%;
+            background: var(--white);
+            border-bottom: 2px solid var(--primary-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 86, 204, 0.1);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        header.scrolled {
+            padding: 8px 4%;
+            box-shadow: 0 8px 30px rgba(0, 86, 204, 0.15);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: var(--transition);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(0, 86, 204, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            z-index: 1001;
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 0 15px rgba(0, 86, 204, 0.3);
+            transition: var(--transition);
+            object-fit: cover;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg);
+            box-shadow: 0 0 25px rgba(0, 86, 204, 0.5);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            border-radius: 6px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 12px;
+            right: 12px;
+            height: 2px;
+            background: var(--blue-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            border-radius: 2px;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            transform: scaleX(1);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-icon {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+        }
+
+        .website-btn {
+            background: var(--blue-gradient);
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(0, 86, 204, 0.2);
+            transition: var(--transition);
+            cursor: pointer;
+            white-space: nowrap;
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+        }
+
+        .website-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 86, 204, 0.3);
+        }
+
+        /* ========== HOME PAGE ========== */
+        .page.home {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .home-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)),
+                url('https://i.postimg.cc/p9S203NL/The-North-Gate-Of-Angkor-Thom.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            filter: brightness(1.1) contrast(1.1) saturate(1.05);
+            -webkit-filter: brightness(1.1) contrast(1.1) saturate(1.05);
+            animation: backgroundFadeIn 1.5s ease-out;
+        }
+
+        @media (min-width: 1025px) {
+            .home-background {
+                background-attachment: fixed;
+            }
+        }
+
+        .home-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 86, 204, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 86, 204, 0.015) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .home-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--light-blue);
+            border-radius: 50%;
+            opacity: 0.02;
+            animation: float 30s infinite linear;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            margin-top: 70px;
+            min-height: calc(100vh - 150px);
+            position: relative;
+            z-index: 1;
+            padding: 0 4%;
+            width: 100%;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 30px 0 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 30px 0 50px;
+            background: transparent;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--blue-gradient);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 86, 204, 0.25);
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-section p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+            min-width: 90px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            border: 2px solid rgba(0, 86, 204, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(0, 86, 204, 0.1);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 12px 30px rgba(0, 86, 204, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .stat-number {
+            font-size: 1.7rem;
+            font-weight: 900;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Website Signup Box */
+        .website-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-blue);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .website-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .website-box p {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--blue-gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 86, 204, 0.25);
+            transition: var(--transition);
+            min-height: 44px;
+            min-width: 44px;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .website-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 86, 204, 0.35);
+        }
+
+        /* QUICK LINKS & VPN PLANS SECTIONS */
+        .home-links-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .home-links-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 25px 20px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--light-blue);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .home-links-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .home-links-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-links-card h4 i {
+            font-size: 1.1rem;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .home-links-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .home-links-card li {
+            margin-bottom: 12px;
+        }
+
+        .home-links-card a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .home-links-card a:hover {
+            background: rgba(0, 86, 204, 0.08);
+            color: var(--accent-blue);
+            transform: translateX(5px);
+            border-color: rgba(0, 86, 204, 0.2);
+        }
+
+        .home-links-card a i {
+            width: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .home-links-card a:hover i {
+            color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        /* Special styling for VPN Plans icons */
+        .home-links-card .fa-gem { color: #f59e0b; }
+        .home-links-card .fa-rocket { color: #3399ff; }
+        .home-links-card .fa-crown { color: #ffd700; }
+        .home-links-card .fa-calendar-alt { color: #10b981; }
+        .home-links-card .fa-infinity { color: #8b5cf6; }
+
+        .home-links-card a:hover .fa-gem { color: #fbbf24; }
+        .home-links-card a:hover .fa-rocket { color: #60a5fa; }
+        .home-links-card a:hover .fa-crown { color: #fcd34d; }
+        .home-links-card a:hover .fa-calendar-alt { color: #34d399; }
+        .home-links-card a:hover .fa-infinity { color: #a78bfa; }
+
+        /* ========== FEATURES PAGE ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 2px solid var(--light-blue);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--blue-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+            background: white;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ========== PRICING PAGE ========== */
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .pricing-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+            font-weight: 900;
+            padding: 0 10px;
+        }
+
+        .pricing-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 20px;
+            padding: 0 10px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 2px solid var(--light-blue);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--blue-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-blue);
+            background: linear-gradient(to bottom, white 0%, rgba(248, 250, 252, 0.9) 100%);
+        }
+
+        .pricing-card.popular:hover {
+            transform: translateY(-5px);
+        }
+
+        .free-tag, .popular-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .free-tag {
+            background: var(--blue-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 86, 204, 0.2);
+        }
+
+        .popular-tag {
+            background: var(--blue-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 86, 204, 0.2);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .plan-description {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            min-height: 40px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .free-price {
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .currency {
+            font-size: 1.3rem;
+            vertical-align: top;
+            color: var(--primary-blue);
+        }
+
+        .period {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .savings-badge {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 15px 0;
+            flex-grow: 1;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        .pricing-features li i {
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .pricing-features li .fa-check {
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li .fa-times {
+            color: var(--text-light);
+            opacity: 0.5;
+            font-size: 0.95rem;
+        }
+
+        /* Blue Buttons */
+        .btn-plan {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: block;
+            margin-top: 15px;
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 86, 204, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 86, 204, 0.15);
+        }
+
+        .btn-filled {
+            background: var(--blue-gradient);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 20px rgba(0, 86, 204, 0.25);
+        }
+
+        .btn-filled:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 86, 204, 0.35);
+        }
+
+        /* Plan Comparison Table */
+        .plan-comparison {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin: 40px 0;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--light-blue);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .plan-comparison::-webkit-scrollbar {
+            display: none;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 600px;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 15px 12px;
+            background: var(--off-white);
+            color: var(--primary-blue);
+            font-weight: 700;
+            border-bottom: 2px solid var(--light-blue);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid var(--light-blue);
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 86, 204, 0.03);
+        }
+
+        .comparison-table .feature-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+            white-space: normal;
+        }
+
+        .check-icon {
+            color: var(--primary-blue);
+            font-size: 1rem;
+        }
+
+        .x-icon {
+            color: var(--text-light);
+            opacity: 0.5;
+            font-size: 1rem;
+        }
+
+        /* ========== CONTACT PAGE ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid var(--light-blue);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .telegram-contact-btn {
+            background: var(--blue-gradient);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            transition: var(--transition);
+            min-height: 44px;
+            min-width: 44px;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .telegram-contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 86, 204, 0.35);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: white;
+            color: var(--text-dark);
+            padding: 40px 4% 20px;
+            position: relative;
+            border-top: 2px solid var(--primary-blue);
+            box-shadow: 0 -5px 20px rgba(0, 86, 204, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            font-weight: 700;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            min-height: 44px;
+            min-width: 44px;
+            padding: 6px 0;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-blue);
+            color: var(--primary-blue);
+            font-size: 0.85rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .footer-bottom a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+
+        /* ========== MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 86, 204, 0.4);
+            border: 3px solid var(--primary-blue);
+            position: relative;
+            animation: modalSlideIn 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+            background: none;
+            border: none;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            z-index: 2001;
+            min-width: 44px;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .close-modal:hover {
+            background: var(--light-blue);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* ALL MODAL TEXT IN BLACK/DARK COLORS */
+        .modal h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #000000; /* Black */
+            font-weight: 800;
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+
+        #selectedPlanInfo {
+            font-size: 1.1rem;
+            margin: 15px 0;
+            color: #1a1a1a; /* Very dark gray */
+            line-height: 1.6;
+        }
+
+        .modal-content p {
+            color: #333333; /* Dark gray */
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .modal-content h4 {
+            color: #000000; /* Black */
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .modal-content .website-notice h4 {
+            color: #000000; /* Black */
+        }
+
+        .modal-content .website-notice p {
+            color: #333333; /* Dark gray */
+        }
+
+        .modal-content .purchase-features {
+            background: rgba(0, 86, 204, 0.05);
+            border-radius: 12px;
+            padding: 15px 12px;
+            margin: 20px 0;
+            text-align: left;
+            border: 1px solid var(--light-blue);
+        }
+
+        .modal-content .purchase-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 0;
+            color: #000000; /* Black */
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .modal-content .purchase-feature-item i {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            width: 16px;
+            flex-shrink: 0;
+        }
+
+        .modal-content .plan-name {
+            font-size: 1.2rem;
+            color: #000000; /* Black */
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+
+        .modal-content .plan-price-large {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #000000; /* Black */
+            margin: 10px 0;
+            line-height: 1;
+            padding: 0 10px;
+        }
+
+        .modal-content .plan-price-large .currency {
+            font-size: 1.2rem;
+            vertical-align: top;
+            color: #000000; /* Black */
+        }
+
+        .modal-content .plan-period-large {
+            font-size: 0.85rem;
+            color: #000000; /* Black */
+            font-weight: 500;
+            margin-left: 4px;
+        }
+
+        .modal-content .purchase-description {
+            color: #333333; /* Dark gray */
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 12px 0;
+            padding: 0 10px;
+        }
+
+        /* Modal buttons remain colored */
+        .modal-content .website-link {
+            background: var(--blue-gradient);
+            color: white;
+        }
+
+        .modal-content .btn-outline {
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+
+        /* Mobile Menu (Up to 768px) */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                z-index: 999;
+                padding: 80px 20px 40px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                box-shadow: 0 0 40px rgba(0, 86, 204, 0.15);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav a {
+                font-size: 1rem;
+                padding: 15px;
+                justify-content: center;
+                width: 100%;
+                border-radius: 10px;
+                border: 2px solid transparent;
+                background: rgba(0, 86, 204, 0.05);
+            }
+            
+            nav a:hover, nav a.active {
+                background: rgba(0, 86, 204, 0.1);
+                border-color: var(--primary-blue);
+            }
+            
+            nav a::after {
+                display: none;
+            }
+            
+            .website-btn.mobile-hidden {
+                display: none;
+            }
+            
+            /* Header adjustments for mobile */
+            header {
+                padding: 10px 3%;
+            }
+            
+            .logo img {
+                height: 38px;
+                width: 38px;
+            }
+            
+            .logo-main {
+                font-size: 1.2rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.65rem;
+            }
+            
+            /* Hero section mobile optimizations */
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-section p {
+                font-size: 0.95rem;
+            }
+            
+            .hero-stats {
+                gap: 15px;
+                margin: 25px 0;
+            }
+            
+            .stat-item {
+                min-width: 85px;
+                padding: 12px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+            
+            /* Home links sections mobile */
+            .home-links-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 30px 0 20px;
+            }
+            
+            .home-links-card {
+                padding: 20px 15px;
+            }
+            
+            .home-links-card h4 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .home-links-card a {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+            
+            /* Grid adjustments for mobile */
+            .features-grid,
+            .pricing-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            /* Main content mobile adjustments */
+            .main-content {
+                margin-top: 65px;
+                padding: 0 3%;
+            }
+            
+            .page {
+                padding: 25px 0 50px;
+            }
+            
+            /* Table adjustments for mobile */
+            .plan-comparison {
+                margin: 30px 0;
+                padding: 20px 15px;
+            }
+            
+            .comparison-table {
+                min-width: 550px;
+            }
+            
+            /* Modal mobile adjustments */
+            .modal-content {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+            
+            .modal h3 {
+                font-size: 1.3rem;
+            }
+            
+            /* Footer mobile adjustments */
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .footer-column h4 {
+                margin-bottom: 15px;
+            }
+            
+            /* Website box mobile adjustments */
+            .website-box {
+                padding: 20px 15px;
+                margin: 25px 0;
+            }
+            
+            .website-link {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Tablet Devices (769px to 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            html {
+                font-size: 17px;
+            }
+            
+            /* Header tablet adjustments */
+            header {
+                padding: 12px 4%;
+            }
+            
+            .logo img {
+                height: 45px;
+                width: 45px;
+            }
+            
+            .logo-main {
+                font-size: 1.4rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.75rem;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+            
+            nav a {
+                font-size: 0.95rem;
+            }
+            
+            .website-btn {
+                padding: 12px 22px;
+                font-size: 0.95rem;
+            }
+            
+            /* Home links sections tablet */
+            .home-links-sections {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            /* Main content tablet adjustments */
+            .main-content {
+                margin-top: 75px;
+                padding: 0 4%;
+            }
+            
+            .page {
+                padding: 40px 0 70px;
+            }
+            
+            /* Hero section tablet adjustments */
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .hero-section p {
+                font-size: 1.05rem;
+            }
+            
+            /* Grid adjustments for tablet */
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            /* Footer tablet adjustments */
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px;
+            }
+            
+            /* Background attachment for tablet */
+            .home-background {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Desktop Devices (1025px and above) */
+        @media (min-width: 1025px) {
+            /* Enable fixed background only on desktop */
+            .home-background {
+                background-attachment: fixed;
+            }
+            
+            /* Home links sections desktop */
+            .home-links-sections {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px;
+            }
+            
+            /* Hero section desktop adjustments */
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            /* Grid adjustments for desktop */
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+            
+            /* Footer desktop adjustments */
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Very Small Mobile Devices (up to 360px) */
+        @media (max-width: 360px) {
+            html {
+                font-size: 15px;
+            }
+            
+            /* Header ultra-mobile adjustments */
+            header {
+                padding: 8px 3%;
+            }
+            
+            .logo img {
+                height: 35px;
+                width: 35px;
+            }
+            
+            .logo-main {
+                font-size: 1.1rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.6rem;
+            }
+            
+            .website-btn {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                min-width: 40px;
+                min-height: 40px;
+            }
+            
+            /* Home links sections ultra-mobile */
+            .home-links-sections {
+                gap: 15px;
+                margin: 25px 0 15px;
+            }
+            
+            .home-links-card {
+                padding: 15px 12px;
+            }
+            
+            .home-links-card h4 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+            
+            .home-links-card a {
+                font-size: 0.85rem;
+                padding: 6px 8px;
+            }
+            
+            .main-content {
+                margin-top: 60px;
+                padding: 0 2%;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-section p {
+                font-size: 0.9rem;
+            }
+            
+            .hero-stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                min-width: 75px;
+                padding: 10px;
+            }
+            
+            .stat-number {
+                font-size: 1.3rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+            
+            .modal-content {
+                padding: 15px 12px;
+                margin: 10px;
+            }
+            
+            .modal h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Landscape Mode */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .modal {
+                align-items: flex-start;
+                padding-top: 10px;
+            }
+            
+            .modal-content {
+                max-height: 85vh;
+                margin-top: 15px;
+            }
+            
+            header {
+                padding: 6px 4%;
+            }
+            
+            .main-content {
+                margin-top: 55px;
+            }
+            
+            .hero-section {
+                padding: 15px 0 25px;
+            }
+            
+            .hero-stats {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+            
+            .stat-item {
+                flex: 0 0 auto;
+                margin-right: 15px;
+            }
+            
+            .home-links-sections {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            nav.active {
+                padding-top: 60px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-plan:active,
+            .website-btn:active,
+            .website-link:active,
+            .telegram-contact-btn:active,
+            .feature-card:active,
+            .pricing-card:active,
+            .contact-card:active,
+            .home-links-card:active {
+                transform: scale(0.98);
+                opacity: 0.95;
+            }
+            
+            .feature-card::before,
+            .pricing-card::before,
+            nav a::after {
+                transition: none;
+            }
+            
+            a, button, .btn-plan, .website-link, .telegram-contact-btn {
+                cursor: pointer;
+            }
+        }
+
+        /* Accessibility and scrolling improvements */
+        .btn-plan:focus,
+        .website-btn:focus,
+        .website-link:focus,
+        .telegram-contact-btn:focus,
+        .close-modal:focus,
+        nav a:focus,
+        .home-links-card a:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--off-white);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--light-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="mainHeader">
+        <a href="#home" class="logo nav-link" data-page="home">
+            <img src="https://i.postimg.cc/DmyWY3bF/d-v-n-b-picture.jpg" alt="D.V.N.B Logo">
+            <div class="logo-text">
+                <span class="logo-main">D.V.N.B</span>
+                <span class="logo-sub">DIGITAL VPN Network Brand</span>
+            </div>
+        </a>
+        
+        <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav>
+            <ul>
+                <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home nav-icon"></i> Home</a></li>
+                <li><a href="#features" class="nav-link" data-page="features"><i class="fas fa-star nav-icon"></i> Features</a></li>
+                <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-tag nav-icon"></i> Pricing</a></li>
+                <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-headset nav-icon"></i> Contact</a></li>
+            </ul>
+        </nav>
+        
+        <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="website-btn">
+            <i class="fas fa-external-link-alt"></i> Official Website
+        </a>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home Page -->
+        <div class="page home active" id="home">
+            <div class="home-background"></div>
+            <div class="home-overlay"></div>
+            <div class="home-particles" id="particles-container"></div>
+            
+            <div class="hero-section">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-alt"></i> PREMIUM VPN SECURITY
+                </div>
+                <h1>Digital VPN Network Brand</h1>
+                <div class="hero-subtitle">
+                    Military-Grade Encryption for Complete Privacy
+                </div>
+                <p>Protect your digital life with our premium VPN service. Experience military-grade encryption, zero-log policy, and access to servers worldwide with unlimited bandwidth.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">256-bit</div>
+                        <div class="stat-label">Encryption</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0 logs</div>
+                        <div class="stat-label">Privacy</div>
+                    </div>
+                </div>
+                
+                <!-- Website Signup Box -->
+                <div class="website-box">
+                    <h3>Ready to Get Started?</h3>
+                    <p>Sign up and purchase plans directly on our official website</p>
+                    <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="website-link">
+                        <i class="fas fa-external-link-alt"></i> digitalvpnnetworkbrand.com
+                    </a>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-light);">
+                        <i class="fas fa-info-circle"></i> All purchases and signups must be done through our official website
+                    </p>
+                </div>
+                
+                <!-- Quick Links & VPN Plans Sections -->
+                <div class="home-links-sections">
+                    <!-- Quick Links Card -->
+                    <div class="home-links-card">
+                        <h4><i class="fas fa-link"></i> Quick Links</h4>
+                        <ul>
+                            <li><a href="#home" class="nav-link" data-page="home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                            <li><a href="#features" class="nav-link" data-page="features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                            <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- VPN Plans Card -->
+                    <div class="home-links-card">
+                        <h4><i class="fas fa-shield-alt"></i> VPN Plans</h4>
+                        <ul>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-gem"></i> 1 Week Trial</a></li>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-rocket"></i> 2-Week Plan</a></li>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-crown"></i> 1 Month Plan</a></li>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-calendar-alt"></i> 6 Month Plan</a></li>
+                            <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-infinity"></i> 1 Year Plan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Page -->
+        <section id="features" class="page">
+            <div class="container">
+                <div class="pricing-header">
+                    <h2>Why Choose D.V.N.B VPN?</h2>
+                    <p class="pricing-subtitle">Our advanced features ensure complete privacy, security, and freedom online.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>Military-Grade Encryption</h3>
+                        <p>AES-256 encryption protects your data from hackers, ISPs, and surveillance.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Ultra-Fast Servers</h3>
+                        <p>Optimized servers in 100+ countries ensure blazing-fast speeds for streaming and gaming.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Global Coverage</h3>
+                        <p>Access content from anywhere with our worldwide network of servers.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h3>Strict No-Logs Policy</h3>
+                        <p>We never track, store, or share your online activities. Your privacy is guaranteed.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3>Multi-Platform Support</h3>
+                        <p>Apps for Windows, macOS, iOS, Android, Linux, and routers.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>24/7 Premium Support</h3>
+                        <p>Our expert team is available around the clock to assist you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Page -->
+        <div class="page" id="pricing">
+            <div class="container">
+                <div class="pricing-header">
+                    <h2>Choose Your Perfect Plan</h2>
+                    <p class="pricing-subtitle">All plans include our core security features. Flexible pricing for every need.</p>
+                </div>
+                
+                <!-- Pricing Grid -->
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="free-tag">Free Trial</div>
+                        <h3>1 Week Trial</h3>
+                        <div class="plan-description">Test our service with basic protection</div>
+                        <div class="price free-price">
+                            <span class="currency">$</span>0<span class="period">/week</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-times"></i>Encrypted traffic (secure browsing)</li>
+                            <li><i class="fas fa-times"></i>Unblock content (streaming, websites)</li>
+                            <li><i class="fas fa-check"></i>Protection on public Wi-Fi</li>
+                            <li><i class="fas fa-check"></i>Change IP → 5 countries available</li>
+                            <li><i class="fas fa-times"></i>Advanced Malicious downloads Protection</li>
+                            <li><i class="fas fa-times"></i>Priority 24/7 support</li>
+                        </ul>
+                        <button class="btn-plan btn-outline select-plan" data-plan="1 Week Trial" data-price="0">View Plan</button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>2-Week Plan</h3>
+                        <div class="plan-description">Short-term protection solution</div>
+                        <div class="price">
+                            <span class="currency">$</span>20<span class="period">/2 weeks</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Encrypted traffic (secure browsing)</li>
+                            <li><i class="fas fa-times"></i>Unblock content (streaming, websites)</li>
+                            <li><i class="fas fa-check"></i>Protection on public Wi-Fi</li>
+                            <li><i class="fas fa-check"></i>Change IP → 15 countries available</li>
+                            <li><i class="fas fa-times"></i>Advanced Malicious downloads Protection</li>
+                            <li><i class="fas fa-times"></i>Priority 24/7 support</li>
+                        </ul>
+                        <button class="btn-plan btn-outline select-plan" data-plan="2-Week Plan" data-price="20">View Plan</button>
+                    </div>
+                    
+                    <div class="pricing-card popular">
+                        <div class="popular-tag">Most Popular</div>
+                        <h3>1 Month Plan</h3>
+                        <div class="plan-description">Monthly protection with streaming access</div>
+                        <div class="price">
+                            <span class="currency">$</span>35<span class="period">/month</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Encrypted traffic (secure browsing)</li>
+                            <li><i class="fas fa-check"></i>Unblock content (streaming, websites)</li>
+                            <li><i class="fas fa-check"></i>Protection on public Wi-Fi</li>
+                            <li><i class="fas fa-check"></i>Change IP → 30 countries available</li>
+                            <li><i class="fas fa-times"></i>Advanced Malicious downloads Protection</li>
+                            <li><i class="fas fa-times"></i>Priority 24/7 support</li>
+                        </ul>
+                        <button class="btn-plan btn-filled select-plan" data-plan="1 Month Plan" data-price="45">View Plan</button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>6 Month Plan</h3>
+                        <div class="plan-description">Half-year protection with advanced features</div>
+                        <div class="price">
+                            <span class="currency">$</span>85<span class="period">/6 months</span>
+                            <span class="savings-badge">Save 22%</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Encrypted traffic (secure browsing)</li>
+                            <li><i class="fas fa-check"></i>Unblock content (streaming, websites)</li>
+                            <li><i class="fas fa-check"></i>Protection on public Wi-Fi</li>
+                            <li><i class="fas fa-check"></i>Change IP → 50 countries available</li>
+                            <li><i class="fas fa-check"></i>Advanced Malicious downloads Protection</li>
+                            <li><i class="fas fa-check"></i>Advanced Ransomware Protection</li>
+                            <li><i class="fas fa-times"></i>Priority 24/7 support</li>
+                        </ul>
+                        <button class="btn-plan btn-outline select-plan" data-plan="6 Month Plan" data-price="85">View Plan</button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>1 Year Plan</h3>
+                        <div class="plan-description">Full year ultimate protection</div>
+                        <div class="price">
+                            <span class="currency">$</span>110<span class="period">/year</span>
+                            <span class="savings-badge">Save 40%</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Encrypted traffic (secure browsing)</li>
+                            <li><i class="fas fa-check"></i>Unblock content (streaming, websites)</li>
+                            <li><i class="fas fa-check"></i>Protection on public Wi-Fi</li>
+                            <li><i class="fas fa-check"></i>Change IP → 80 countries available</li>
+                            <li><i class="fas fa-check"></i>Advanced Malicious downloads Protection</li>
+                            <li><i class="fas fa-check"></i>Advanced Ransomware Protection</li>
+                            <li><i class="fas fa-check"></i>Priority 24/7 support</li>
+                        </ul>
+                        <button class="btn-plan btn-outline select-plan" data-plan="1 Year Plan" data-price="130">View Plan</button>
+                    </div>
+                </div>
+                
+                <!-- Plan Comparison Table -->
+                <div class="plan-comparison">
+                    <h2 style="text-align: center; margin-bottom: 30px; font-size: 2.2rem;">Plan Comparison</h2>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Features</th>
+                                <th>1 Week Trial</th>
+                                <th>2-Week Plan</th>
+                                <th>1 Month Plan</th>
+                                <th>6 Month Plan</th>
+                                <th>1 Year Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">Price</td>
+                                <td><strong>FREE</strong></td>
+                                <td><strong>$20</strong></td>
+                                <td><strong>$45</strong></td>
+                                <td><strong>$85</strong></td>
+                                <td><strong>$130</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Duration</td>
+                                <td>7 days</td>
+                                <td>14 days</td>
+                                <td>30 days</td>
+                                <td>180 days</td>
+                                <td>365 days</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Countries Available</td>
+                                <td>5</td>
+                                <td>15</td>
+                                <td>30</td>
+                                <td>50</td>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Encrypted Traffic</td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Unblock Content</td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Public Wi-Fi Protection</td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Malicious downloads Protection</td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Ransomware Protection</td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Priority Support</td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-times x-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Website Purchase Box -->
+                <div class="website-box" style="margin-top: 50px;">
+                    <h3>Purchase on Official Website</h3>
+                    <p>All plans must be purchased through our official website. Click the link below to sign up and buy your plan.</p>
+                    <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="website-link">
+                        <i class="fas fa-shopping-cart"></i> Buy Now at digitalvpnnetworkbrand.com
+                    </a>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-light);">
+                        <i class="fas fa-exclamation-circle"></i> No purchases can be made directly on this page. You must visit our official website.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Page -->
+        <section id="contact" class="page">
+            <div class="container">
+                <div class="pricing-header">
+                    <h2>Contact Us</h2>
+                    <p class="pricing-subtitle">We're here to help! Contact us for support or inquiries.</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <h3>Telegram Support</h3>
+                        <p style="color: var(--text-light); margin-bottom: 20px;">Contact us directly on Telegram for instant support and inquiries.</p>
+                        <a href="https://t.me/Dy_Ma_01" target="_blank" class="telegram-contact-btn">
+                            <i class="fab fa-telegram"></i> Message @Dy_Ma_01
+                        </a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email Support</h3>
+                        <p style="color: var(--text-light); margin-bottom: 20px;">Get assistance via email. We typically respond within 24 hours.</p>
+                        <div style="margin: 25px 0;">
+                            <a href="mailto:digitalvpnnetworkbrand@gmail.com" style="display: block; color: var(--primary-blue); font-size: 1rem; margin: 10px 0; text-decoration: none; font-weight: 600;">
+                                <i class="fas fa-envelope"></i> digitalvpnnetworkbrand@gmail.com
+                            </a>
+                            <a href="mailto:digitalvpnnetworkbrandofficial@gmail.com" style="display: block; color: var(--primary-blue); font-size: 1rem; margin: 10px 0; text-decoration: none; font-weight: 600;">
+                                <i class="fas fa-envelope"></i> digitalvpnnetworkbrandofficial@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Official Website</h3>
+                        <p style="color: var(--text-light); margin-bottom: 20px;">Visit our official website to sign up and purchase plans.</p>
+                        <div style="margin: 25px 0;">
+                            <a href="https://digitalvpnnetworkbrand.com" target="_blank" style="display: block; color: var(--primary-blue); font-size: 1rem; margin: 10px 0; text-decoration: none; font-weight: 600;">
+                                <i class="fas fa-external-link-alt"></i> digitalvpnnetworkbrand.com
+                            </a>
+                        </div>
+                        <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="btn-filled" style="width:100%; padding:15px; font-size:1rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-rocket"></i> Sign Up Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Important Notice -->
+                <div class="website-box" style="margin-top: 50px; border-color: #f59e0b;">
+                    <h3 style="color: #f59e0b;"><i class="fas fa-exclamation-triangle"></i> Important Notice</h3>
+                    <p style="color: var(--text-dark); margin-bottom: 20px; font-weight: 500;">
+                        <strong>ALL SIGNUPS AND PURCHASES MUST BE DONE THROUGH OUR OFFICIAL WEBSITE:</strong>
+                    </p>
+                    <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="website-link">
+                        <i class="fas fa-external-link-alt"></i> digitalvpnnetworkbrand.com
+                    </a>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-light);">
+                        <i class="fas fa-info-circle"></i> This page is for information only. No purchases can be made here.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Plan Selection Modal -->
+    <div id="planModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3>Purchase Information</h3>
+            <p id="selectedPlanInfo" style="font-size: 1.1rem; margin: 15px 0; color: var(--text-light); line-height: 1.6;"></p>
+            
+            <div style="margin: 25px 0; padding: 20px; background: var(--off-white); border-radius: 12px;">
+                <h4 style="margin-bottom: 10px; color: var(--primary-blue);"><i class="fas fa-exclamation-circle"></i> Important</h4>
+                <p style="color: var(--text-dark); font-size: 0.95rem;">
+                    You must purchase this plan through our official website. This page is for information only.
+                </p>
+            </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px; flex-wrap: wrap;">
+                <a href="https://digitalvpnnetworkbrand.com" target="_blank" class="website-link" style="padding: 12px 25px; font-size: 1rem;">
+                    <i class="fas fa-external-link-alt"></i> Go to Website
+                </a>
+                <button class="btn-outline" id="closeModalBtn" style="padding: 12px 25px;">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>D.V.N.B VPN</h4>
+                <p style="color:var(--text-light); margin-bottom:20px; font-size: 0.95rem;">
+                    <strong>Digital VPN Network Brand</strong> - Premium VPN service with military-grade encryption and zero-log policy.
+                </p>
+                <div class="logo" style="justify-content:flex-start; gap:10px; margin-bottom:20px;">
+                    <img src="https://i.postimg.cc/DmyWY3bF/d-v-n-b-picture.jpg" alt="D.V.N.B Logo" style="height:50px; width:50px;">
+                    <div class="logo-text">
+                        <span class="logo-main" style="font-size:1.5rem;">D.V.N.B</span>
+                        <span class="logo-sub" style="font-size:0.8rem;">Develop By Cambodia</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home" class="nav-link" data-page="home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#features" class="nav-link" data-page="features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>VPN Plans</h4>
+                <ul>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-gem"></i> 1 Week Trial</a></li>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-rocket"></i> 2-Week Plan</a></li>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-crown"></i> 1 Month Plan</a></li>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-calendar-alt"></i> 6 Month Plan</a></li>
+                    <li><a href="#pricing" class="nav-link" data-page="pricing"><i class="fas fa-infinity"></i> 1 Year Plan</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contact & Signup</h4>
+                <ul>
+                    <li><a href="https://t.me/Dy_Ma_01" target="_blank"><i class="fab fa-telegram"></i> Telegram Support</a></li>
+                    <li><a href="mailto:digitalvpnnetworkbrand@gmail.com"><i class="fas fa-envelope"></i> Email 1</a></li>
+                    <li><a href="mailto:digitalvpnnetworkbrandofficial@gmail.com"><i class="fas fa-envelope"></i> Email 2</a></li>
+                    <li><a href="https://digitalvpnnetworkbrand.com" target="_blank"><i class="fas fa-external-link-alt"></i> Official Website</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 D.V.N.B – Digital VPN Network Brand.</p>
+            <p>Contact: Telegram <a href="https://t.me/Dy_Ma_01" target="_blank" style="color:var(--primary-blue); font-weight:600;">@Dy_Ma_01</a> • Website: <a href="https://digitalvpnnetworkbrand.com" target="_blank" style="color:var(--primary-blue); font-weight:600;">digitalvpnnetworkbrand.com</a></p>
+            <p style="margin-top:10px; font-size:0.85rem; color:var(--text-light);">
+                <strong>IMPORTANT:</strong> All signups and purchases must be done through official website only.
+            </p>
+            <p>Developed By Dyma</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all functionality
+            initNavigation();
+            initScrollHeader();
+            initParticles();
+            initPlanModal();
+            initSmoothScroll();
+            initPageAnimations();
+            initLazyAnimations();
+            initMobileMenu();
+            
+            // Make sure all external links open in new tab
+            document.querySelectorAll('a[href^="http"]').forEach(link => {
+                if (link.hostname !== window.location.hostname) {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                }
+            });
+        });
+
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+            
+            if (mobileMenuBtn && nav) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    mobileMenuBtn.innerHTML = nav.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+                
+                // Close menu when clicking on a link
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        nav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!nav.contains(event.target) && !mobileMenuBtn.contains(event.target) && nav.classList.contains('active')) {
+                        nav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            }
+        }
+
+        // Page Navigation
+        function initNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            // Show page function
+            function showPage(pageId) {
+                // Hide all pages first
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show the target page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                } else {
+                    // If page doesn't exist, show home page
+                    const homePage = document.getElementById('home');
+                    if (homePage) {
+                        homePage.classList.add('active');
+                        pageId = 'home';
+                    }
+                }
+                
+                // Update active state on navigation links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update URL hash without triggering scroll
+                if (window.location.hash !== `#${pageId}`) {
+                    history.pushState(null, null, `#${pageId}`);
+                }
+            }
+            
+            // Nav link click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    if (pageId) {
+                        showPage(pageId);
+                        // Scroll to top when changing pages
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    }
+                });
+            });
+            
+            // Handle URL hash on page load
+            function handleHash() {
+                const hash = window.location.hash.substring(1);
+                if (hash && document.getElementById(hash) && document.getElementById(hash).classList.contains('page')) {
+                    showPage(hash);
+                } else {
+                    showPage('home');
+                }
+            }
+            
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', handleHash);
+            
+            // Also listen for hash changes directly
+            window.addEventListener('hashchange', handleHash);
+            
+            // Initial page load
+            handleHash();
+        }
+
+        // Header scroll effect
+        function initScrollHeader() {
+            const header = document.getElementById('mainHeader');
+            if (!header) return;
+            
+            // Set initial state
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            }
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Create floating particles
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles-container');
+            if (!particlesContainer) return;
+            
+            // Clear any existing particles
+            particlesContainer.innerHTML = '';
+            
+            // Create particles
+            const particleCount = 20;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size between 20-100px
+                const size = Math.random() * 80 + 20;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.1 + 0.03;
+                
+                // Random animation
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                
+                // Random gradient
+                const hue = 210 + Math.random() * 30; // Blue color range
+                const saturation = 70 + Math.random() * 30;
+                particle.style.background = `radial-gradient(circle at 30% 30%, 
+                    hsla(${hue}, ${saturation}%, 70%, 0.4) 0%, 
+                    transparent 70%)`;
+                
+                // Random blur effect
+                particle.style.filter = `blur(${Math.random() * 3}px)`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Plan Selection Modal
+        function initPlanModal() {
+            const planModal = document.getElementById('planModal');
+            const closeModal = document.querySelector('.close-modal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const selectedPlanInfo = document.getElementById('selectedPlanInfo');
+            
+            if (!planModal || !closeModal || !closeModalBtn || !selectedPlanInfo) return;
+            
+            // Handle plan selection buttons
+            document.querySelectorAll('.select-plan').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plan = this.getAttribute('data-plan');
+                    const price = this.getAttribute('data-price');
+                    
+                    let planInfo = '';
+                    if (price === "0" || price === "0.00") {
+                        planInfo = `
+                            <div class="plan-details">
+                                <h3>${plan}</h3>
+                                <div class="plan-price-free">FREE</div>
+                                <p class="plan-description">This is a 7-day free trial with limited features.</p>
+                                <div class="plan-features-list">
+                                    <p><i class="fas fa-check"></i> Basic features access</p>
+                                    <p><i class="fas fa-check"></i> 7-day trial period</p>
+                                    <p><i class="fas fa-check"></i> Email support</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        planInfo = `
+                            <div class="plan-details">
+                                <h3>${plan}</h3>
+                                <div class="plan-price">$${price}</div>
+                                <p class="plan-description">To purchase this plan, please visit our official website.</p>
+                                <div class="plan-features-list">
+                                    <p><i class="fas fa-check"></i> Full features access</p>
+                                    <p><i class="fas fa-check"></i> Priority support</p>
+                                    <p><i class="fas fa-check"></i> Regular updates</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    selectedPlanInfo.innerHTML = planInfo;
+                    planModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                });
+            });
+            
+            // Function to close modal
+            function closeModalFunc() {
+                planModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }
+            
+            // Close modal buttons
+            closeModal.addEventListener('click', closeModalFunc);
+            closeModalBtn.addEventListener('click', closeModalFunc);
+            
+            // Close modal when clicking outside
+            planModal.addEventListener('click', function(e) {
+                if (e.target === planModal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && planModal.style.display === 'flex') {
+                    closeModalFunc();
+                }
+            });
+        }
+
+        // Smooth scroll for anchor links within pages
+        function initSmoothScroll() {
+            // Only target anchor links that are NOT page navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#' || href === '#!') return;
+                    
+                    const targetId = href.substring(1);
+                    
+                    // Skip if this is a page navigation link
+                    if (this.classList.contains('nav-link') && this.getAttribute('data-page')) {
+                        return;
+                    }
+                    
+                    const targetElement = document.getElementById(targetId);
+                    const currentPage = document.querySelector('.page.active');
+                    
+                    // Only scroll if target is within current active page
+                    if (targetElement && currentPage && currentPage.contains(targetElement)) {
+                        e.preventDefault();
+                        
+                        const header = document.getElementById('mainHeader');
+                        const headerHeight = header ? header.offsetHeight : 0;
+                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Page animations
+        function initPageAnimations() {
+            // Add animation to pricing cards on page load
+            setTimeout(() => {
+                document.querySelectorAll('.pricing-card').forEach((card, index) => {
+                    if (!card.classList.contains('animated')) {
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        card.classList.add('animated');
+                    }
+                });
+            }, 300);
+            
+            // Add animation to feature cards
+            setTimeout(() => {
+                document.querySelectorAll('.feature-card').forEach((card, index) => {
+                    if (!card.classList.contains('animated')) {
+                        card.style.animationDelay = `${index * 0.15}s`;
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        card.classList.add('animated');
+                    }
+                });
+            }, 500);
+            
+            // Add CSS animations if not already present
+            if (!document.getElementById('custom-animations')) {
+                const style = document.createElement('style');
+                style.id = 'custom-animations';
+                style.textContent = `
+                    .animated {
+                        animation-fill-mode: both;
+                    }
+                    
+                    .plan-details {
+                        text-align: center;
+                    }
+                    
+                    .plan-details h3 {
+                        color: var(--primary-blue);
+                        font-size: 1.4rem;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .plan-price-free {
+                        font-size: 2.5rem;
+                        font-weight: bold;
+                        color: var(--success);
+                        margin: 20px 0;
+                    }
+                    
+                    .plan-price {
+                        font-size: 2.5rem;
+                        font-weight: bold;
+                        color: var(--primary-blue);
+                        margin: 20px 0;
+                    }
+                    
+                    .plan-period {
+                        font-size: 1rem;
+                        color: var(--text-light);
+                        margin-left: 5px;
+                    }
+                    
+                    .plan-description {
+                        color: var(--text-dark);
+                        margin-bottom: 20px;
+                        line-height: 1.5;
+                    }
+                    
+                    .plan-features-list {
+                        text-align: left;
+                        background: rgba(0, 86, 204, 0.05);
+                        padding: 20px;
+                        border-radius: 10px;
+                        margin: 20px 0;
+                    }
+                    
+                    .plan-features-list p {
+                        margin: 10px 0;
+                        color: var(--text-dark);
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .plan-features-list i {
+                        color: var(--success);
+                        margin-right: 10px;
+                        font-size: 0.9rem;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Helper function to check if element is in viewport
+        function isElementInViewport(el) {
+            if (!el) return false;
+            
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            
+            // Return true if element is within viewport (with some threshold)
+            return (
+                rect.top <= windowHeight * 0.85 && // 85% from top
+                rect.bottom >= windowHeight * 0.15  // 15% from bottom
+            );
+        }
+
+        // Lazy load animations when elements come into view
+        function initLazyAnimations() {
+            const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card');
+            
+            function checkElements() {
+                animatedElements.forEach(element => {
+                    if (isElementInViewport(element) && !element.classList.contains('animated')) {
+                        element.classList.add('animated');
+                        element.style.opacity = '0';
+                        element.style.transform = 'translateY(20px)';
+                        
+                        // Different animations based on element type
+                        if (element.classList.contains('pricing-card')) {
+                            element.style.animation = 'fadeInUp 0.6s ease forwards';
+                        } else if (element.classList.contains('feature-card')) {
+                            element.style.animation = 'fadeInUp 0.6s ease forwards';
+                        } else {
+                            element.style.animation = 'fadeIn 0.8s ease forwards';
+                        }
+                    }
+                });
+            }
+            
+            // Check on load
+            window.addEventListener('load', checkElements);
+            
+            // Check on scroll with throttling
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (!scrollTimeout) {
+                    scrollTimeout = setTimeout(function() {
+                        scrollTimeout = null;
+                        checkElements();
+                    }, 100);
+                }
+            });
+            
+            // Initial check
+            setTimeout(checkElements, 500);
+        }
+
+        // Handle window resize for responsive adjustments
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                // Recreate particles on resize for better positioning
+                initParticles();
+                
+                // Re-check animations
+                initLazyAnimations();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
